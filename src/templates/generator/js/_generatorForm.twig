@@ -1,0 +1,58 @@
+{% js %}
+    let shown = "color";
+    let bckColor = document.querySelector('[data-attribute*="bck_color"]');
+    let bckImage = document.querySelector('[data-attribute*="bck_image"]');
+    let bckButton = document.querySelector('.bck_button');
+    let bckCheckbox = document.querySelector('.bck_checkbox');
+
+    let showBckColor = () => {
+        shown = "color";
+        bckImage.style.display = "none";
+        bckColor.style.display = "block";
+    }
+
+    let showBckImage = () => {
+        shown = "image";
+        bckImage.style.display = "block";
+        bckColor.style.display = "none";
+    }
+
+    let showCurrent = () => {
+        bckButton.style.display = "";
+        if (shown == "color") {
+            showBckColor();
+        } else if (shown == "image") {
+            showBckImage();
+        }
+    };
+
+    let toggle = () => {
+        if (shown == "color") {
+            showBckImage();
+        } else if (shown == "image") {
+            showBckColor();
+        }
+    };
+
+    let hideEverything = () => {
+        bckImage.style.display = "none";
+        bckColor.style.display = "none";
+        bckButton.style.display = "none";
+    };
+
+    showCurrent();
+
+    bckButton.addEventListener('click', () => {
+        let label = (shown == "color") ? "{{ bck.labelShowImage }}" : "{{ bck.labelShowColor }}";
+        bckButton.firstElementChild.textContent = label;
+        toggle();
+    });
+
+    bckCheckbox.addEventListener('change', e => {
+        if (e.currentTarget.checked) {
+            hideEverything();
+        } else {
+            showCurrent();
+        }
+    });
+{% endjs %}

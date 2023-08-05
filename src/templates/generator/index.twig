@@ -1,0 +1,159 @@
+{% extends "_layouts/cp" %}
+
+{% import "_includes/forms.twig" as forms %}
+
+{% set title = "QRraft plugin – QR Generator" %}
+
+{% block content %}
+
+    {% if qrFile is defined %}
+        {% include "qraft/generator/_result.twig" %}
+    {% else %}
+
+        {% if not generator is defined %}
+            {% set generator = craft.qraft.getDefault %}
+        {% endif %}
+
+        <form method="post">
+        
+            {{ actionInput('qraft/generate/cp-qr') }}
+            {{ csrfInput() }}
+
+            {% set bck = {
+                default: "color",
+                labelShowColor: "Use a background color instead",
+                labelShowImage: "Use a background image instead",
+            } %}
+
+            {{ forms.textareaField({
+                label: "Content to encode:",
+                name: 'content',
+                type: 'text',
+                autofocus: true,
+                required: true,
+                first: true,
+                value: generator.content,
+                errors: generator.getErrors('content'),
+            }) }}
+
+            {{ forms.textField({
+                label: "Size (px):",
+                name: 'size',
+                type: 'number',
+                tip: "From 76px to 1000px",
+                required: true,
+                value: generator.size,
+                errors: generator.getErrors('size'),
+            }) }}
+
+            {{ forms.selectField({
+                label: "File format:",
+                instructions: "Choose the desired file format for the generated QR code.",
+                name: 'format',
+                value: generator.format,
+                options: {
+                    png: 'PNG',
+                    svg: 'SVG',
+                    webp: 'WEBP',
+                },
+                errors: generator.getErrors('format'),
+            }) }}
+
+            {% if plugin('qraft').is('pro') %}
+
+                <hr>
+
+                {{ forms.elementSelectField({
+                    label: "Custom logo:",
+                    instructions: "Upload a custom image to be included in the QR code. The generator supports transparency but <b>not</b> SVG files.",
+                    name: "logo",
+                    elementType: "craft\\elements\\Asset",
+                    single: true,
+                    viewMode: 'large',
+                    criteria: {
+                        kind: 'image',
+                        filename: ['not', '*.svg']
+                    },
+                    limit: 1,
+                    jsClass: 'Craft.AssetSelectInput',
+                    sources: '*',
+                    elements: [craft.assets.id(generator.logo).one()],
+                }) }}
+
+                {{ forms.colorField({
+                    label: "Foreground color:",
+                    instructions: "Select or enter the color for the foreground of the QR code.",
+                    name: "foregroundColor",
+                    tip: "Consider contrast for optimal QR code readability when selecting colors.",
+                    value: generator.foregroundColor,
+                    errors: generator.getErrors('foregroundColor'),
+                }) }}
+
+                {{ forms.selectField({
+                    label: "Foreground opacity:",
+                    instructions: "Here you can adjust the opacity of the foreground color.",
+                    name: "foregroundOpacity",
+                    value: generator.foregroundOpacity,
+                    options: {
+                        100: '100',
+                        75: '75',
+                        50: '50',
+                        25: '25',
+                    },
+                    value: generator.foregroundOpacity,
+                    errors: generator.getErrors('foregroundOpacity'),
+                }) }}
+
+                {{ forms.colorField({
+                    label: "Background color:",
+                    name: "backgroundColor",
+                    instructions: "Select or enter the color for the foreground of the QR code.",
+                    attribute: 'bck_color',                    
+                    tip: "Consider contrast for optimal QR code readability when selecting colors.",
+                    value: generator.backgroundColor,
+                    errors: generator.getErrors('backgroundColor'),
+                }) }}
+
+                {# TODO: Image background planned for future release #}
+                {# {{ forms.elementSelectField({
+                    label: "Background image:",
+                    name: "test2",
+                    elementType: "craft\\elements\\Asset",
+                    single: true,
+                    viewMode: 'large',
+                    criteria: {
+                        kind: 'image',
+                    },
+                    limit: 1,
+                    jsClass: 'Craft.AssetSelectInput',
+                    sources: '*',
+                    attribute: "bck_image hidden"
+                }) }}
+
+                {{ forms.button({
+                    label: "Use a background image instead",
+                    class: "bck_button",
+                }) }} #}
+
+                {{ forms.checkboxField({
+                    label: "Transparent background",
+                    name: 'noBackground',
+                    class: "bck_checkbox",
+                    checked: generator.noBackground,
+                    errors: generator.getErrors('noBackground'),
+                }) }}
+
+                {# {% include "qraft/generator/js/_generatorForm.twig" %} #} {# TODO: Image background planned for future release #}
+
+            {% endif %}
+
+            <hr>
+
+            {{ forms.submitButton({
+                label: "Generate",
+                spinner: true,
+            }) }}
+
+        </form>
+    {% endif %}
+{% endblock %}

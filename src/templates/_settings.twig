@@ -1,0 +1,24 @@
+{# @var plugin \orbitalflight\qraft\Qraft #}
+{# @var settings \orbitalflight\qraft\models\Settings #}
+
+{% import '_includes/forms.twig' as forms %}
+
+{{ forms.lightswitchField({
+    first: true,
+    label: "Show the QR generator in the control panel:",
+    on: settings.showCpSection,
+    name: "showCpSection"
+}) }}
+
+{{ forms.textField({
+    label: "Default QR size:",
+    value: settings.defaultSize, 
+    errors: settings.getErrors('defaultSize'),
+    name: "defaultSize",
+    type: "number",
+    min: 100, 
+    max: 1000,
+}) }}
+
+
+{# ... #}

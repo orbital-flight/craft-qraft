@@ -1,0 +1,25 @@
+{% import "_includes/forms.twig" as forms %}
+
+<img src="{{ qrFile }}" alt="Your freshly generated QR code" style="max-height: 50vh;">
+
+<form method="post" style="margin: 24px 0;">
+    {{ actionInput('qraft/after/download') }}
+    {{ csrfInput() }}
+    {{ hiddenInput('qrUrl', qrUrl) }}
+    {{ forms.submitButton({
+        label: "Download (" ~ qrFileExtension|upper ~ " – " ~ qrFileSize ~ ")",
+        spinner: true,
+    }) }}
+</form>
+
+<hr>
+
+<form method="post">
+    {{ actionInput('qraft/after/new') }}
+    {{ csrfInput() }}
+    {# {{ hiddenInput( qrPreset ) }} #}
+    {{ forms.submitButton({
+        label: "New QR Code",
+        spinner: true,
+    }) }}
+</form>
