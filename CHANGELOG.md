@@ -1,4 +1,4 @@
 # Release Notes for QRaft
 
-## 1.0.0 - 2023.08.xx
+## 1.0.0 - UNRELEASED
 - Initial release

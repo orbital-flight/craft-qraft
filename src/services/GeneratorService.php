@@ -154,4 +154,46 @@ class GeneratorService extends Component {
 
         return true;
     }
+    
+    /**
+     * qr
+     * Get content and options and create a QR code if requirement are met.
+     * Returns the filepath as string (or error is sh*t happens)
+     *
+     * @param  mixed $content
+     * @param  mixed $options
+     * @return string
+     */
+    public function qr(string $content, array $options = null): string {
+        $settings = Qraft::getInstance()->getSettings();
+
+        // Fill a model with the request
+        $generator = new GeneratorModel();
+        $generator->content = $content;
+        $generator->size = (isset($options['size']) ? $options['size'] : $settings->defaultSize);
+        $generator->format = (isset($options['format'])) ? strtolower($options['format']) : $settings->defaultFormat;
+        $generator->foregroundColor = (isset($options['foregroundColor'])) ? str_replace('#', '', $options['foregroundColor']) : $generator->foregroundColor;
+        $generator->backgroundColor = (isset($options['backgroundColor'])) ? str_replace('#', '', $options['backgroundColor']) : $generator->backgroundColor;
+        $generator->foregroundOpacity = (isset($options['foregroundOpacity'])) ? $options['foregroundOpacity'] : $generator->foregroundOpacity;
+        $generator->noBackground = (isset($options['noBackground'])) ? (bool)$options['noBackground'] : $generator->noBackground;
+        
+        // Enforce pro version
+        if (!Qraft::$plugin->generator->payCheckMate($generator)) {
+            return "QRaft – Sorry, customization is a PRO feature only.";
+        }
+
+        // Validate and return errors if necessary
+        $generator->validate();
+        if ($generator->getErrors()) {
+            $errors = 'QRaft – Error(s) while generating the QR code –––> ';
+            foreach ($generator->getErrors() as $property => $error) {
+                $errors .= $property . ': ' . $error[0] . ' ||| ';
+            }
+
+            return $errors;
+        }
+
+        // Generate qr code
+        return Qraft::$plugin->generator->createQr($generator);
+    }
 }
