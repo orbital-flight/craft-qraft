@@ -14,12 +14,32 @@
 
 <hr>
 
-<form method="post">
-    {{ actionInput('qraft/after/new') }}
+<form method="post" style="display: inline-block;">
+    {{ actionInput('qraft/generator/modify') }}
+    {{ csrfInput() }}
+    {{ hiddenInput('content', generator.content) }}
+    {{ hiddenInput('size', generator.size) }}
+    {{ hiddenInput('format', generator.format) }}
+    {{ hiddenInput('foregroundColor', generator.foregroundColor) }}
+    {{ hiddenInput('backgroundColor', generator.backgroundColor) }}
+    {{ hiddenInput('foregroundOpacity', generator.foregroundOpacity) }}
+    {{ hiddenInput('noBackground', generator.noBackground) }}
+    {{ hiddenInput('logo', generator.logo) }}
+    {{ hiddenInput('qrUrl', qrUrl) }}
+    {{ hiddenInput('qrFile', qrFile) }}
+
+    {{ forms.submitButton({
+        label: "Modify",
+        spinner: true,
+    }) }}
+</form>
+
+<form method="post" style="display: inline-block;">
+    {{ actionInput('qraft/generator/new') }}
     {{ csrfInput() }}
     {# {{ hiddenInput( qrPreset ) }} #}
     {{ forms.submitButton({
-        label: "New QR Code",
+        label: "New QR",
         spinner: true,
     }) }}
 </form>

@@ -22,7 +22,7 @@ class GeneratorModel extends Model {
 
     // Methods
     public function __toString() {
-        return $this->name;
+        return $this->title;
     }
 
     // Rules
