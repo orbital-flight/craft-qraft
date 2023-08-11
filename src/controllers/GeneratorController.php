@@ -29,7 +29,7 @@ class GeneratorController extends Controller {
         
         // If the model contains errors, bring them to the user
         if ($generator->getErrors()) {
-            $this->setFailFlash('Couldn’t generate QR.');
+            $this->setFailFlash(Craft::t('qraft', 'Couldn’t generate QR.'));
             return $this->renderTemplate('qraft/generator', ['generator' => $generator], View::TEMPLATE_MODE_CP);
         } else {
             // Create and return the QR code and its informations
@@ -95,7 +95,7 @@ class GeneratorController extends Controller {
         
         // If the model contains errors, set a fail flash message
         if ($generator->getErrors()) {
-            $this->setFailFlash('Couldn’t get previous presets.');
+            $this->setFailFlash(Craft::t('qraft', 'Couldn’t get previous presets.'));
         } else {
             // Provide the model if it comes clean
             $variables = ['generator' => $generator];

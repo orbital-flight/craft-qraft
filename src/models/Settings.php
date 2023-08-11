@@ -5,6 +5,7 @@
 
 namespace orbitalflight\qraft\models;
 
+use Craft;
 use craft\base\Model;
 
 /**
@@ -25,8 +26,8 @@ class Settings extends Model {
         return [
             [['defaultSize'], 'required'],
             [['defaultSize'], 'integer'],
-            [['defaultSize'], 'in','range' => range(76, 1000), 'message' => 'The default size must be within 76 and 1000 pixels.'],
-            [['defaultFormat'], 'in','range' => ['png', 'webp', 'svg'], 'message' => 'Invalid file format.'],
+            [['defaultSize'], 'in','range' => range(76, 1000), 'message' => Craft::t('qraft', 'The file size must be within 76 and 1000 pixels.')],
+            [['defaultFormat'], 'in','range' => ['png', 'webp', 'svg'], 'message' => Craft::t('qraft', 'Invalid file format.')],
         ];
     }
 }

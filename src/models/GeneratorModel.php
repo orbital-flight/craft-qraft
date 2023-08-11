@@ -5,6 +5,7 @@
 
 namespace orbitalflight\qraft\models;
 
+use Craft;
 use craft\base\Model;
 
 class GeneratorModel extends Model {
@@ -29,10 +30,10 @@ class GeneratorModel extends Model {
     public function rules(): array {
         return [
             [['content', 'size', 'format', 'foregroundColor', 'backgroundColor'], 'required'],
-            [['size'], 'in','range' => range(76, 1000), 'message' => 'The default size must be within 76 and 1000 pixels.'],
-            [['format'], 'in','range' => ['png', 'webp', 'svg'], 'message' => 'Invalid file format.'],
-            [['foregroundColor', 'backgroundColor'], 'match', 'pattern' => '/^([0-9a-fA-F]{3}){1,2}$/', 'message' => 'Invalid color format.'],
-            [['foregroundOpacity'], 'in','range' => range(0, 100), 'message' => 'Opacity must be within 0 and 100%.'],
+            [['size'], 'in','range' => range(76, 1000), 'message' => Craft::t('qraft', 'The file size must be within 76 and 1000 pixels.')],
+            [['format'], 'in','range' => ['png', 'webp', 'svg'], 'message' => Craft::t('qraft', 'Invalid file format.')],
+            [['foregroundColor', 'backgroundColor'], 'match', 'pattern' => '/^([0-9a-fA-F]{3}){1,2}$/', 'message' => Craft::t('qraft', 'Invalid color format.')],
+            [['foregroundOpacity'], 'in','range' => range(0, 100), 'message' => Craft::t('qraft', 'Opacity must be within 0 and 100%.')],
         ];
     }
 }

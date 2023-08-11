@@ -2,12 +2,13 @@
 
 <img src="{{ qrFile }}" alt="Your freshly generated QR code" style="max-height: 50vh;">
 
+{% set downloadLabel = "Download"|t('qraft') %}
 <form method="post" style="margin: 24px 0;">
     {{ actionInput('qraft/after/download') }}
     {{ csrfInput() }}
     {{ hiddenInput('qrUrl', qrUrl) }}
     {{ forms.submitButton({
-        label: "Download (" ~ qrFileExtension|upper ~ " – " ~ qrFileSize ~ ")",
+        label: downloadLabel ~ " (" ~ qrFileExtension|upper ~ " – " ~ qrFileSize ~ ")",
         spinner: true,
     }) }}
 </form>
@@ -29,7 +30,7 @@
     {{ hiddenInput('qrFile', qrFile) }}
 
     {{ forms.submitButton({
-        label: "Modify",
+        label: "Modify"|t('qraft'),
         spinner: true,
     }) }}
 </form>
@@ -39,7 +40,7 @@
     {{ csrfInput() }}
     {# {{ hiddenInput( qrPreset ) }} #}
     {{ forms.submitButton({
-        label: "New QR",
+        label: "New QR"|t('qraft'),
         spinner: true,
     }) }}
 </form>
