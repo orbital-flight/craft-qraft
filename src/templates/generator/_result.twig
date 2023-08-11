@@ -4,7 +4,7 @@
 
 {% set downloadLabel = "Download"|t('qraft') %}
 <form method="post" style="margin: 24px 0;">
-    {{ actionInput('qraft/after/download') }}
+    {{ actionInput('qraft/generator/download') }}
     {{ csrfInput() }}
     {{ hiddenInput('qrUrl', qrUrl) }}
     {{ forms.submitButton({
