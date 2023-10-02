@@ -1,5 +1,8 @@
 # Release Notes for QRaft
 
+## 1.0.3 – 2023.10.02
+* Added spanish translation
+
 ## 1.0.2 - 2023.08.11
 ### Added
 * Added french translation
