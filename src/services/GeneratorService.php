@@ -177,7 +177,7 @@ class GeneratorService extends Component {
         $generator->foregroundOpacity = (isset($options['foregroundOpacity'])) ? $options['foregroundOpacity'] : $generator->foregroundOpacity;
         $generator->noBackground = (isset($options['noBackground'])) ? (bool)$options['noBackground'] : $generator->noBackground;
         
-	if (Qraft::v("pro", '<')) {
+	if (Qraft::v("pro")) {
             $generator->logo = (isset($options['logo'])) ? $options['logo'] : $generator->logo;
         }
 
