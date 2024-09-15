@@ -177,6 +177,10 @@ class GeneratorService extends Component {
         $generator->foregroundOpacity = (isset($options['foregroundOpacity'])) ? $options['foregroundOpacity'] : $generator->foregroundOpacity;
         $generator->noBackground = (isset($options['noBackground'])) ? (bool)$options['noBackground'] : $generator->noBackground;
         
+	if (Qraft::v("pro")) {
+            $generator->logo = (isset($options['logo'])) ? $options['logo'] : $generator->logo;
+        }
+
         // Enforce pro version
         if (!Qraft::$plugin->generator->payCheckMate($generator)) {
             return "QRaft – Sorry, customization is a PRO feature only.";
