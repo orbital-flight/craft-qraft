@@ -1,4 +1,6 @@
 # Release Notes for QRaft
+## 1.0.4 – 2024.09.15
+* Allow PRO users to add logo from frontend (Thanks @mufi-siebird)
 
 ## 1.0.3 – 2023.10.02
 * Added spanish translation
